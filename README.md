@@ -111,7 +111,7 @@ cyberswat:drupal-lamp/ (master✗) $ cp .drupal_lamp.json /Users/cyberswat/.drup
 cyberswat:drupal-lamp/ (master✗) $ export DRUPAL_LAMP=/Users/cyberswat/.drupal_lamp.json
 ```
 
-The structure of the json works with chef to define the attributes necessary to do it's work.  JSON doesn't allow comments by default, but please read through the following to help clarify it's use.  It may be helpful to compare the raw file to this commented version for clarity.
+The structure of the json works with chef to define the attributes necessary to do its work.  JSON doesn't allow comments by default, but please read through the following to help clarify it's use.  It may be helpful to compare the raw file to this commented version for clarity.
 
 ```javascript
 {
@@ -239,6 +239,31 @@ The structure of the json works with chef to define the attributes necessary to 
   }
 }
 ```
+
+You can generate your own ssl certificate files by using openssl. First, generate a private key and certificate signing request:
+
+```
+$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+...
+$ openssl rsa -passin pass:x -in server.pass.key -out key.pem
+writing RSA key
+$ rm server.pass.key
+$ openssl req -new -key key.pem -out server.csr
+...
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:California
+...
+A challenge password []:
+...
+```
+
+Next, generate your SSL certificate from the server.key private key and server.csr files:
+
+```
+openssl x509 -req -days 365 -in server.csr -signkey key.pem -out cert.pem
+```
+
+Remember to (1) verify the location of your certificates (could be /etc/ssl/certs/), and (2) move key.pem and cert.pem into that directory.
 
 ## Assets ##
 
