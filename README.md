@@ -26,6 +26,8 @@ This approach has been tested on OSX 10.8.3 in addition to the desktop version o
 
 I'm listing virtualbox in this list only because a fair number of people use it. I don't like the software and their latest version, as of this writing, has introduced a issues to using vagrant.  Stay away from Oracle code imo and use vmware.
 
+If you have an existing installation of drupal-lamp, don't assume that you have the correct versions of these components.
+
   * Vagrant 1.2.2 http://downloads.vagrantup.com/
   * Virtualbox 4.2.10 https://www.virtualbox.org/wiki/Download_Old_Builds
 or
