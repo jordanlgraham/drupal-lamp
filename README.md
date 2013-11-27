@@ -278,3 +278,12 @@ Initially when the project was launched, we used submodules for the cookbooks. S
 To customize the cookbooks, edit the Berkfile.
 
 Notice: because of the specific nature of this project with drupal, if you are looking to use the drupal install, the cookbooks currently in the Berkfile are necessary to use. However, you can try to change the version.
+
+## SSL ##
+
+To add SSL to your instance, add the following line in your chef/roles/drupal_lamp.rb file in the 'env_run_lists' section, just above the recipe for 'mysql::server':
+
+```
+"recipe[apache2::mod_ssl]",
+```
+
