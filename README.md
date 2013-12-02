@@ -26,6 +26,8 @@ This approach has been tested on OSX 10.8.3 in addition to the desktop version o
 
 I'm listing virtualbox in this list only because a fair number of people use it. I don't like the software and their latest version, as of this writing, has introduced a issues to using vagrant.  Stay away from Oracle code imo and use vmware.
 
+If you have an existing installation of drupal-lamp, don't assume that you have the correct versions of these components.
+
   * Vagrant 1.2.2 http://downloads.vagrantup.com/
   * Virtualbox 4.2.10 https://www.virtualbox.org/wiki/Download_Old_Builds
 or
@@ -84,7 +86,7 @@ The VM is powered off. To restart the VM, simply run `vagrant up`
 
 Before bringing an instance online you need to download a base box. The base box is a vanilla virtual machine that the recipes get applied against.  Once you download this box it will be cached on your local machine and won't need to be downloaded again.
 
-You will need to edit the Vagrantfile at the root level of the cloned drupal-lamp repository to uncomment the url of the base box you would like to use.  Line 26 is an Ubuntu 12.04 base box that will work with VMware while line 27 provides the same box configured to work with VirtualBox. Once you've uncommented your selection you can bring the box up.  I'll stick with VirtualBox from this point forward simply because most people will be using it.  You can use the --provider flag for the vagrant command to switch to VMware (which I recommend), but that is outside the scope of these instructions.
+You will need to edit the Vagrantfile at the root level of the cloned drupal-lamp repository to uncomment the url of the base box you would like to use.  Line 28 is an Ubuntu 12.04 base box that will work with VMware while line 29 provides the same box configured to work with VirtualBox. Once you've uncommented your selection you can bring the box up.  I'll stick with VirtualBox from this point forward simply because most people will be using it.  You can use the --provider flag for the vagrant command to switch to VMware (which I recommend), but that is outside the scope of these instructions.
 
 ```bash
 cyberswat:drupal-lamp/ (master✗) $ vagrant up
@@ -111,7 +113,7 @@ cyberswat:drupal-lamp/ (master✗) $ cp .drupal_lamp.json /Users/cyberswat/.drup
 cyberswat:drupal-lamp/ (master✗) $ export DRUPAL_LAMP=/Users/cyberswat/.drupal_lamp.json
 ```
 
-The structure of the json works with chef to define the attributes necessary to do it's work.  JSON doesn't allow comments by default, but please read through the following to help clarify it's use.  It may be helpful to compare the raw file to this commented version for clarity.
+The structure of the json works with chef to define the attributes necessary to do its work.  JSON doesn't allow comments by default, but please read through the following to help clarify it's use.  It may be helpful to compare the raw file to this commented version for clarity.
 
 ```javascript
 {
@@ -240,6 +242,31 @@ The structure of the json works with chef to define the attributes necessary to 
 }
 ```
 
+You can generate your own ssl certificate files by using openssl. First, generate a private key and certificate signing request:
+
+```
+$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+...
+$ openssl rsa -passin pass:x -in server.pass.key -out key.pem
+writing RSA key
+$ rm server.pass.key
+$ openssl req -new -key key.pem -out server.csr
+...
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:California
+...
+A challenge password []:
+...
+```
+
+Next, generate your SSL certificate from the server.key private key and server.csr files:
+
+```
+openssl x509 -req -days 365 -in server.csr -signkey key.pem -out cert.pem
+```
+
+Remember to (1) verify the location of your certificates (could be /etc/ssl/certs/), and (2) move key.pem and cert.pem into that directory.
+
 ## Assets ##
 
 During the setup you created an assets folder to store all of the Drupal files. This folder becomes a mount from the virtual machine to provide a way to keep everything you are interested on your local machine. This gives you the ability to work with the files in a way that is comfortable to you.  Understanding the structure of this folder is important.
@@ -278,3 +305,12 @@ Initially when the project was launched, we used submodules for the cookbooks. S
 To customize the cookbooks, edit the Berkfile.
 
 Notice: because of the specific nature of this project with drupal, if you are looking to use the drupal install, the cookbooks currently in the Berkfile are necessary to use. However, you can try to change the version.
+
+## SSL ##
+
+To add SSL to your instance, add the following line in your chef/roles/drupal_lamp.rb file in the 'env_run_lists' section, just above the recipe for 'mysql::server':
+
+```
+"recipe[apache2::mod_ssl]",
+```
+
