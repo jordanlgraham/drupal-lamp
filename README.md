@@ -217,8 +217,8 @@ The structure of the json works with chef to define the attributes necessary to 
                       "443": {
                         "server_name": "example.vagrant.local",
                         "server_aliases": ["example.vagrant.local"],
-                        "error_log": "syslog:local7",
-                        "transfer_log": "logs/ssl_access_log",
+                        "error_log": "/var/log/apache2/error.log",
+                        "transfer_log": "/var/log/apache2/ssl_access_log",
                         "log_level": "warn",
                         "ssl": {
                           "ssl_engine": "on",
