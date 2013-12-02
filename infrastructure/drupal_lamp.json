@@ -21,7 +21,7 @@
   },
   "drupal": {
       "sites": {
-          "example": {
+          "soha": {
               "active": true,
               "deploy": {
                   "action": "clean",
@@ -34,13 +34,13 @@
                       "--clean-url": 1
                   },
                   "settings": {
-                      "profile": "standard",
+                      "profile": "minimal",
                       "files": "sites/default/files",
                       "custom": "sites/default/example.settings.php",
                       "settings": "sites/default/settings.php",
                       "cookbook": "drupal",
                       "template": "example.settings.php.erb",
-                      "db_name": "example",
+                      "db_name": "soha",
                       "db_host": "localhost",
                       "db_prefix": "",
                       "db_driver": "mysql"
@@ -48,15 +48,33 @@
               },
               "repository": {
                   "host": "github.com",
-                  "uri": "https://github.com/drupal/drupal.git",
-                  "revision": "7.x"
+                  "uri": "git@github.com:jordanlgraham/soha.git",
+                  "revision": "master"
               },
               "web_app": {
-                  "80": {
-                    "server_name": "drupal.local",
-                    "rewrite_engine": "On",
-                    "docroot": "/srv/www/example/current"
-                  }
+                "80": {
+                  "server_name": "soha.local",
+                  "rewrite_engine": "On",
+                  "docroot": "/srv/www/soha/current"
+                },
+                "443": {
+                  "server_name": "soha.local",
+                  "server_aliases": ["soha.local"],
+                  "error_log": "/var/log/apache2/error.log",
+                  "transfer_log": "/var/log/apache2/ssl_access_log",
+                  "log_level": "warn",
+                  "ssl": {
+                    "ssl_engine": "on",
+                    "ssl_protocol": ["all", "-SSLv2"],
+                    "ssl_cipher_suite": ["ALL", "!ADH", "!EXPORT", "!SSLv2", "RC4+RSA", "+HIGH", "+MEDIUM", "+LOW"],
+                    "ssl_certificate_file": "/usr/var/ssl/certs/server.crt",
+                    "ssl_certificate_key_file": "/usr/var/ssl/certs/server.key"
+                  },
+                  "set_env_if": ["SetEnvIf User-Agent \".*MSIE.*\" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0"],
+                  "custom_log": "\"|/usr/bin/logger -t httpd -p local6.info\" combined",
+                  "rewrite_engine": "On",
+                  "docroot": "/srv/www/soha/current"
+                }
               }
           }
       }

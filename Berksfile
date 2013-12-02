@@ -9,3 +9,4 @@ cookbook "openssl", git: "https://github.com/opscode-cookbooks/openssl", ref: "c
 cookbook "php", git: "https://github.com/opscode-cookbooks/php", ref: "177795e188572b4bd415dbf104789b11b5dabc0c"
 cookbook "ssh_known_hosts", git: "https://github.com/opscode-cookbooks/ssh_known_hosts", ref: "7be00659342ce09c9c1b472b4340b211e77131a1"
 cookbook "sudo", git: "https://github.com/opscode-cookbooks/sudo", ref: "a503303c8df8e832de5252169f4c02540b46667c"
+cookbook "create_certs", git: "https://github.com/cgravier/selfsigned_certificate", ref: "0f861d0568baa3e0669ddd8951a9c8d51422d532"
