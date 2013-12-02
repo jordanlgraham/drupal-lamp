@@ -111,7 +111,7 @@ cyberswat:drupal-lamp/ (master✗) $ cp .drupal_lamp.json /Users/cyberswat/.drup
 cyberswat:drupal-lamp/ (master✗) $ export DRUPAL_LAMP=/Users/cyberswat/.drupal_lamp.json
 ```
 
-The structure of the json works with chef to define the attributes necessary to do it's work.  JSON doesn't allow comments by default, but please read through the following to help clarify it's use.  It may be helpful to compare the raw file to this commented version for clarity.
+The structure of the json works with chef to define the attributes necessary to do its work.  JSON doesn't allow comments by default, but please read through the following to help clarify its use.  It may be helpful to compare the raw file to this commented version for clarity.
 
 ```javascript
 {
@@ -239,6 +239,10 @@ The structure of the json works with chef to define the attributes necessary to 
   }
 }
 ```
+
+## SSL ##
+
+For information on how to automatically create self-signed SSL certificates and deploy them in a dev environment, see https://github.com/cyberswat/drupal-lamp/wiki/SSL.
 
 ## Assets ##
 
