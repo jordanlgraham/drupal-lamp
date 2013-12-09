@@ -41,7 +41,7 @@
   },
   "drupal": {
       "sites": {
-          "soha": {
+          "gccf": {
               "active": true,
               "deploy": {
                   "action": "clean",
@@ -60,7 +60,7 @@
                       "settings": "sites/default/settings.php",
                       "cookbook": "drupal",
                       "template": "example.settings.php.erb",
-                      "db_name": "soha",
+                      "db_name": "gccf",
                       "db_host": "localhost",
                       "db_prefix": "",
                       "db_driver": "mysql"
@@ -68,32 +68,14 @@
               },
               "repository": {
                   "host": "github.com",
-                  "uri": "git@github.com:jordanlgraham/soha.git",
-                  "revision": "ftp"
+                  "uri": "git@github.com:jordanlgraham/gccf.git",
+                  "revision": "master"
               },
               "web_app": {
                 "80": {
-                  "server_name": "soha.local",
+                  "server_name": "gccf.local",
                   "rewrite_engine": "On",
-                  "docroot": "/srv/www/soha/current"
-                },
-                "443": {
-                  "server_name": "soha.local",
-                  "server_aliases": ["soha.local"],
-                  "error_log": "/var/log/apache2/error.log",
-                  "transfer_log": "/var/log/apache2/ssl_access_log",
-                  "log_level": "warn",
-                  "ssl": {
-                    "ssl_engine": "on",
-                    "ssl_protocol": ["all", "-SSLv2"],
-                    "ssl_cipher_suite": ["ALL", "!ADH", "!EXPORT", "!SSLv2", "RC4+RSA", "+HIGH", "+MEDIUM", "+LOW"],
-                    "ssl_certificate_file": "/usr/var/ssl/certs/server.crt",
-                    "ssl_certificate_key_file": "/usr/var/ssl/certs/server.key"
-                  },
-                  "set_env_if": ["SetEnvIf User-Agent \".*MSIE.*\" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0"],
-                  "custom_log": "\"|/usr/bin/logger -t httpd -p local6.info\" combined",
-                  "rewrite_engine": "On",
-                  "docroot": "/srv/www/soha/current"
+                  "docroot": "/srv/www/gccf/current"
                 }
               }
           }

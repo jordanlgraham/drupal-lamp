@@ -28,7 +28,6 @@ env_run_lists "_default" => [
                 "recipe[create_certs::default]",
                 "recipe[build-essential]",
                 "recipe[drupal::apache]",
-                "recipe[apache2::mod_ssl]",
                 "recipe[mysql::server]",
                 "recipe[drupal::ssh]",
                 "recipe[drupal::php]",
