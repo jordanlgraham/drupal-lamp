@@ -25,7 +25,6 @@ env_run_lists "_default" => [
                 "recipe[drupal::init]",
                 "recipe[sudo]",
                 "recipe[git]",
-                "recipe[create_certs::default]",
                 "recipe[build-essential]",
                 "recipe[drupal::apache]",
                 "recipe[mysql::server]",

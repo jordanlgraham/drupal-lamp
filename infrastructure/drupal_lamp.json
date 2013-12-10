@@ -41,14 +41,14 @@
   },
   "drupal": {
       "sites": {
-          "gccf": {
+          "csm": {
               "active": true,
               "deploy": {
                   "action": "clean",
                   "releases": 1
               },
               "drupal": {
-                  "version": 7.23,
+                  "version": 6.22,
                   "install": {
                       "install_configure_form.update_status_module": "'array(FALSE,FALSE)'",
                       "--clean-url": 1
@@ -60,7 +60,7 @@
                       "settings": "sites/default/settings.php",
                       "cookbook": "drupal",
                       "template": "example.settings.php.erb",
-                      "db_name": "gccf",
+                      "db_name": "csm",
                       "db_host": "localhost",
                       "db_prefix": "",
                       "db_driver": "mysql"
@@ -68,14 +68,14 @@
               },
               "repository": {
                   "host": "github.com",
-                  "uri": "git@github.com:jordanlgraham/gccf.git",
+                  "uri": "git@github.com:jordanlgraham/csm.git",
                   "revision": "master"
               },
               "web_app": {
                 "80": {
-                  "server_name": "gccf.local",
+                  "server_name": "csm.local",
                   "rewrite_engine": "On",
-                  "docroot": "/srv/www/gccf/current"
+                  "docroot": "/srv/www/csm/current"
                 }
               }
           }
